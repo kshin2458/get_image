@@ -39,6 +39,7 @@ class ImageScraping():
             else:
                 break
         
+        _num=num
         for url in urls:
             r = requests.get(url, stream=True)
             if r.status_code == 200:
@@ -46,7 +47,7 @@ class ImageScraping():
                     r.raw.decode_content = True
                     shutil.copyfileobj(r.raw, f)
                 num=num+1
-        print("finish!")
+        print("{} images are downloaded!".format(num-_num))
 
 if __name__=="__main__":
     keyword = input("検索ワード:")
