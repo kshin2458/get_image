@@ -18,8 +18,8 @@ class ImageScraping():
     def get_urls(self, keyword):
         Res = requests.get("https://www.google.com/search?hl=jp&q=" + keyword + "&btnG=Google+Search&tbs=0&safe=off&tbm=isch")
         Html = Res.text
-        Soup = bs4.BeautifulSoup(Html,'lxml')
-        links = Soup.find_all("img", limit=20)
+        Soup = bs4.BeautifulSoup(Html,'html.parser')
+        links = Soup.find_all("img", limit=40)
         urls=[]
         for info in links:
             urls.append(info.get("src"))
@@ -32,10 +32,17 @@ class ImageScraping():
 
         urls = self.get_urls(keyword)
         num=0
+        file_name=self.file_path+file_name
+        while True:
+            if os.path.isfile(file_name+str(num)+".jpg"):
+                num=num+1
+            else:
+                break
+        
         for url in urls:
             r = requests.get(url, stream=True)
             if r.status_code == 200:
-                with open(self.file_path+file_name+str(num)+".jpg", 'wb') as f:
+                with open(file_name+str(num)+".jpg", 'wb') as f:
                     r.raw.decode_content = True
                     shutil.copyfileobj(r.raw, f)
                 num=num+1

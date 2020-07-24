@@ -10,4 +10,6 @@ import get\_image
 プログラム本文で以下の様に実行してください。
 
 imgsrc=get\_image.ImageScraping(file\_path="保存したいファイルのパス")  
-imgsrc.download\_img(keyword="検索したい語句", file\_name="保存名")
+imgsrc.download\_img(keyword="検索したい語句", file\_name="保存名")  
+2020-07-25  
+同じファイルネーム保存フォルダ内にあったらファイル名の番号を自動で変更する機能を追加しました。
